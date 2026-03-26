@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ViaLivre Auto Escola</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#0d0d0d;--dark:#1a1a1a;--yellow:#f5c518;--yellow-d:#d4aa00;--white:#fff;--gray:#888;--light:#f5f5f5;--red:#e63946}
+body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:env(safe-area-inset-top) max(64px, env(safe-area-inset-right)) 0 max(64px, env(safe-area-inset-left));height:calc(70px + env(safe-area-inset-top));background:var(--black);transition:all .3s}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--yellow);letter-spacing:2px}
+.nav-logo span{color:var(--white)}
+.nav-links{display:flex;gap:36px;list-style:none;align-items:center}
+.nav-links a{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;font-weight:500;transition:all .2s;position:relative}
+.nav-links a:hover{color:var(--yellow)}
+.nav-cta{background:var(--yellow);color:var(--black)!important;padding:10px 24px;font-weight:700!important}
+.nav-cta:hover{background:var(--yellow-d)!important}
+
+.menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1000}
+.menu-toggle span{width:25px;height:2px;background:var(--white);transition:all .3s}
+
+.hero{height:100vh;height:100dvh;min-height:600px;position:relative;overflow:hidden;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1800&q=85')center/cover no-repeat}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(13,13,13,1) 0%,rgba(13,13,13,.7) 55%,rgba(13,13,13,.2) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 80px;max-width:850px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--yellow);color:var(--black);padding:7px 18px;border-radius:2px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;width:fit-content;margin-bottom:28px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,12vw,130px);color:var(--white);line-height:.85;letter-spacing:1px;margin-bottom:24px;text-transform:uppercase}
+.hero-title .accent{color:var(--yellow)}
+.hero-desc{font-size:17px;line-height:1.7;color:rgba(255,255,255,.6);max-width:480px;font-weight:300;margin-bottom:48px}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn-yellow{background:var(--yellow);color:var(--black);padding:16px 44px;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:2px;transition:all .2s;border:none;cursor:pointer}
+.btn-yellow:hover{background:var(--yellow-d);transform:translateY(-2px)}
+.btn-ghost-w{border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:16px 36px;text-decoration:none;font-size:14px;font-weight:400;letter-spacing:1px;text-transform:uppercase;border-radius:2px;transition:all .2s}
+.btn-ghost-w:hover{border-color:var(--yellow);color:var(--yellow)}
+.hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:2;display:flex;background:rgba(13,13,13,.9);backdrop-filter:blur(15px);border-top:1px solid rgba(255,255,255,.07)}
+.hero-stat{flex:1;padding:28px 40px;border-right:1px solid rgba(255,255,255,.07);text-align:center}
+.hero-stat:last-child{border-right:none}
+.hs-n{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--yellow);line-height:1}
+.hs-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:4px;white-space:nowrap}
+
+.bbold{font-family:'Bebas Neue',sans-serif}
+.kicker-y{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--yellow);font-weight:600;margin-bottom:12px}
+
+/* CATEGORIAS */
+.categorias{padding:100px 64px;background:var(--black)}
+.cat-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,74px);color:white;line-height:.95;margin-bottom:60px}
+.cat-title span{color:var(--yellow)}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.cat-card{position:relative;overflow:hidden;cursor:default}
+.cat-img{width:100%;height:280px;object-fit:cover;display:block;filter:brightness(.55);transition:all .5s}
+.cat-card:hover .cat-img{filter:brightness(.4);transform:scale(1.04)}
+.cat-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:32px}
+.cat-letter{font-family:'Bebas Neue',sans-serif;font-size:80px;color:var(--yellow);line-height:.9;margin-bottom:8px;opacity:.9}
+.cat-name{font-family:'Bebas Neue',sans-serif;font-size:28px;color:white;margin-bottom:6px;letter-spacing:1px}
+.cat-desc{font-size:13px;color:rgba(255,255,255,.55);font-weight:300}
+.cat-highlight{border:2px solid var(--yellow)}
+
+/* HOW */
+.how{background:var(--yellow);padding:80px 64px}
+.how-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.how-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,72px);color:var(--black);line-height:.95;margin-bottom:20px}
+.how-sub{font-size:15px;color:rgba(0,0,0,.55);line-height:1.7}
+.how-steps{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.how-step{background:var(--black);padding:32px 28px}
+.step-n{font-family:'Bebas Neue',sans-serif;font-size:56px;color:rgba(245,197,24,.12);line-height:1;margin-bottom:12px}
+.step-name{font-size:16px;font-weight:600;color:white;margin-bottom:8px}
+.step-desc{font-size:13px;color:rgba(255,255,255,.38);line-height:1.6}
+
+/* DEPOIMENTOS */
+.testimonials{padding:100px 64px;background:var(--light)}
+.test-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px;flex-wrap:wrap;gap:24px}
+.test-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,68px);color:var(--black);letter-spacing:1px;line-height:.95}
+.test-title span{color:var(--red)}
+.test-sub-txt{font-size:14px;color:var(--gray);max-width:240px;line-height:1.7;text-align:right}
+.test-main{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;margin-bottom:20px}
+.test-row3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tc{background:white;padding:40px;position:relative;transition:all .3s;cursor:default}
+.tc:hover{box-shadow:0 20px 50px rgba(0,0,0,.07)}
+.tc.black{background:var(--black)}
+.tc.yellow-border{border-left:4px solid var(--yellow)}
+.tc-tag{position:absolute;top:20px;right:20px;background:var(--yellow);color:var(--black);padding:4px 12px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.tc.black .tc-tag{background:rgba(245,197,24,.15);color:var(--yellow)}
+.tc-stars{display:flex;gap:3px;margin-bottom:16px}
+.tc-star{color:var(--yellow);font-size:16px}
+.tc-text{font-size:16px;line-height:1.75;color:var(--black);font-style:italic;margin-bottom:28px}
+.tc-text.lg{font-size:18px}
+.tc.black .tc-text{color:rgba(255,255,255,.72)}
+.tc-author{display:flex;align-items:center;gap:14px}
+.tc-photo{width:50px;height:50px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--yellow)}
+.tc.black .tc-photo{border-color:rgba(245,197,24,.3)}
+.tc-name{font-size:14px;font-weight:700;color:var(--black);text-transform:uppercase;letter-spacing:.5px}
+.tc-role{font-size:12px;color:var(--gray);margin-top:2px}
+.tc.black .tc-name{color:white}
+.tc.black .tc-role{color:rgba(255,255,255,.3)}
+
+/* PLANOS */
+.plans{padding:100px 64px;background:var(--black)}
+.plans-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;flex-wrap:wrap;gap:24px}
+.plans-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,6vw,70px);color:white;line-height:.95}
+.plans-title span{color:var(--yellow)}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.plan{background:var(--dark);padding:48px 36px;position:relative}
+.plan.feat{background:var(--yellow)}
+.feat-badge{position:absolute;top:0;left:50%;transform:translateX(-50%);background:white;color:var(--black);padding:5px 20px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.plan-tier{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px;font-weight:600}
+.plan.feat .plan-tier{color:rgba(0,0,0,.4)}
+.plan-name{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;color:white;margin-bottom:16px}
+.plan.feat .plan-name{color:var(--black)}
+.plan-price{font-family:'Bebas Neue',sans-serif;font-size:58px;color:var(--yellow);line-height:1;margin-bottom:4px}
+.plan.feat .plan-price{color:var(--black)}
+.plan-period{font-size:13px;color:rgba(255,255,255,.3);margin-bottom:36px}
+.plan.feat .plan-period{color:rgba(0,0,0,.45)}
+.plan-feats{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
+.plan-feats li{display:flex;gap:10px;font-size:14px;color:rgba(255,255,255,.5)}
+.plan-feats li span{color:var(--yellow);font-weight:700}
+.plan.feat .plan-feats li{color:rgba(0,0,0,.65)}
+.plan.feat .plan-feats li span{color:var(--black)}
+.plan-btn{display:block;text-align:center;text-decoration:none;padding:14px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:2px;transition:all .2s;border:1px solid rgba(255,255,255,.12);color:white}
+.plan-btn:hover{background:rgba(255,255,255,.07)}
+.plan.feat .plan-btn{background:var(--black);border:none;color:white}
+.plan.feat .plan-btn:hover{background:rgba(0,0,0,.75)}
+
+/* CTA */
+.cta-section{position:relative;min-height:560px;display:flex;align-items:center}
+.cta-bg2{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1800&q=80')center/cover no-repeat}
+.cta-ov{position:absolute;inset:0;background:rgba(13,13,13,.88)}
+.cta-inner{position:relative;z-index:2;max-width:900px;margin:0 auto;text-align:center;padding:100px 64px}
+.cta-ytag{display:inline-block;background:var(--yellow);color:var(--black);padding:6px 20px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+.cta-title-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,8vw,100px);color:white;line-height:.9;letter-spacing:1px;margin-bottom:20px}
+.cta-title-big span{color:var(--yellow)}
+.cta-text{font-size:16px;color:rgba(255,255,255,.5);max-width:500px;margin:0 auto 44px;line-height:1.8}
+.cta-row{display:flex;justify-content:center;gap:44px;flex-wrap:wrap;margin-bottom:44px}
+.cta-item{color:rgba(255,255,255,.55);font-size:14px;display:flex;align-items:center;gap:8px}
+.cta-item strong{color:var(--yellow)}
+
+footer{background:var(--black);padding:36px max(64px, env(safe-area-inset-right)) max(36px, env(safe-area-inset-bottom)) max(64px, env(safe-area-inset-left));display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;border-top:1px solid rgba(255,255,255,.05)}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--yellow);letter-spacing:2px}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.22);text-decoration:none;text-transform:uppercase;letter-spacing:1px;transition:color .2s}
+.footer-links a:hover{color:var(--yellow)}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.12)}
+
+@media(max-width:992px){
+  nav{padding:0 32px}
+  .hero-content{padding:0 40px}
+  .categorias,.plans,.testimonials{padding:80px 32px}
+}
+
+@media(max-width:768px){
+  nav{padding:env(safe-area-inset-top) max(24px, env(safe-area-inset-right)) 0 max(24px, env(safe-area-inset-left));height:calc(70px + env(safe-area-inset-top))}
+  .menu-toggle{display:flex}
+  .nav-links{
+    position:absolute;top:calc(70px + env(safe-area-inset-top));left:0;width:100%;background:var(--black);
+    flex-direction:column;gap:0;padding:10px 0 calc(20px + env(safe-area-inset-bottom));
+    transform:translateY(-20px);opacity:0;visibility:hidden;transition:all .3s ease-in-out;
+    border-bottom:1px solid rgba(255,255,255,.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .nav-links.active{transform:translateY(0);opacity:1;visibility:visible}
+  .nav-links li{width:100%;text-align:center}
+  .nav-links a{display:block;padding:15px;font-size:16px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .nav-cta{margin:15px 24px 0;padding:15px!important;display:block}
+
+  .hero{padding-top:calc(70px + env(safe-area-inset-top));height:auto;min-height:100vh;min-height:100dvh;flex-direction:column}
+  .hero-content{padding:60px 24px 100px;text-align:center;width:100%;max-width:100%;margin-top:auto}
+  .hero-badge{margin:0 auto 24px}
+  .hero-title{font-size:clamp(46px, 12vw, 66px);margin-bottom:20px}
+  .hero-desc{margin:0 auto 36px;font-size:16px}
+  .hero-btns{flex-direction:column;width:100%;max-width:320px;margin:0 auto;gap:12px}
+  .btn-yellow,.btn-ghost-w{width:100%;padding:18px;display:block}
+  
+  .hero-stats{position:relative;flex-wrap:wrap;background:var(--dark);width:100%;margin-top:auto}
+  .hero-stat{flex:0 0 50%;max-width:50%;padding:24px 16px;border:none;border-bottom:1px solid rgba(255,255,255,.05)}
+  .hero-stat:nth-child(even){border-left:1px solid rgba(255,255,255,.05)}
+  .hs-n{font-size:clamp(30px, 8vw, 40px)}
+  .hs-l{white-space:normal;line-height:1.4;margin-top:6px}
+
+  .cat-title,.how-title,.test-title,.plans-title,.cta-title-big{font-size:clamp(40px, 9vw, 54px);line-height:.95;text-align:center;margin-left:auto;margin-right:auto}
+  .kicker-y{text-align:center;display:block}
+  .cat-grid{grid-template-columns:1fr;gap:4px}
+  .cat-img{height:240px}
+
+  .how{padding:80px 24px}
+  .how-inner{grid-template-columns:1fr;gap:48px;text-align:center}
+  .how-steps{grid-template-columns:1fr}
+
+  .testimonials{padding:80px 24px}
+  .test-header{flex-direction:column;align-items:center;text-align:center}
+  .test-sub-txt{text-align:center;max-width:100%}
+  .test-main{grid-template-columns:1fr}
+  .test-row3{grid-template-columns:1fr}
+  .tc{padding:30px}
+
+  .plans{padding:80px 24px}
+  .plans-grid{grid-template-columns:1fr;gap:20px}
+  .plan{padding:40px 24px}
+
+  .cta-inner{padding:60px 24px}
+  .cta-row{flex-direction:column;gap:16px;align-items:center}
+  .cta-item{justify-content:center}
+
+  footer{padding:40px max(24px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));flex-direction:column;text-align:center;gap:24px}
+  .footer-links{justify-content:center;flex-wrap:wrap;gap:16px}
+}
+
+@media(max-width:480px){
+  .cat-img{height:220px}
+  .plan{padding:36px 24px}
+  .tc{padding:26px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Via<span>Livre</span></div>
+  <div class="menu-toggle" id="mobile-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Categorias</a></li>
+    <li><a href="#">Como funciona</a></li>
+    <li><a href="#">Planos</a></li>
+    <li><a href="#" class="nav-cta">Matricular agora</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-badge">🚦 98% de aprovação</span>
+    <h1 class="hero-title">SUA <span class="accent">CNH</span><br>DO JEITO<br>CERTO</h1>
+    <p class="hero-desc">Do zero à habilitação com instrutores experientes, simulados online e acompanhamento completo em cada etapa do processo.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-yellow">Fazer matrícula →</a>
+      <a href="#" class="btn-ghost-w">Ver categorias</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hs-n">98%</div><div class="hs-l">Taxa de aprovação</div></div>
+    <div class="hero-stat"><div class="hs-n">8.000+</div><div class="hs-l">Alunos formados</div></div>
+    <div class="hero-stat"><div class="hs-n">20 anos</div><div class="hs-l">No mercado</div></div>
+    <div class="hero-stat"><div class="hs-n">4.9★</div><div class="hs-l">Avaliação Google</div></div>
+  </div>
+</section>
+
+<section class="categorias">
+  <p class="kicker-y">Habilitações disponíveis</p>
+  <h2 class="cat-title">Escolha sua<br><span>categoria</span></h2>
+  <div class="cat-grid">
+    <div class="cat-card cat-highlight">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=700&q=80" alt="Categoria B">
+      <div class="cat-overlay">
+        <div class="cat-letter">B</div>
+        <div class="cat-name">Carros e Utilitários</div>
+        <div class="cat-desc">A categoria mais popular. Carros e veículos leves até 3,5 toneladas.</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Categoria A">
+      <div class="cat-overlay">
+        <div class="cat-letter">A</div>
+        <div class="cat-name">Motocicletas</div>
+        <div class="cat-desc">Motos e motocicletas de qualquer cilindrada com segurança total.</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img class="cat-img" src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=700&q=80" alt="Categoria E">
+      <div class="cat-overlay">
+        <div class="cat-letter">E</div>
+        <div class="cat-name">Carreta & Combinado</div>
+        <div class="cat-desc">Para profissionais. Veículos acima de 3,5t com reboque e semirreboque.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="how-inner">
+    <div>
+      <p class="kicker-y" style="color:rgba(0,0,0,.5)">Como funciona</p>
+      <h2 class="how-title">Do zero<br>à CNH em<br>4 passos</h2>
+      <p class="how-sub">Processo simples, transparente e sem surpresas. Cuidamos de tudo enquanto você aprende a dirigir com segurança.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step"><div class="step-n">01</div><h3 class="step-name">Matrícula online</h3><p class="step-desc">Cadastro em minutos, sem burocracia.</p></div>
+      <div class="how-step"><div class="step-n">02</div><h3 class="step-name">Aulas teóricas</h3><p class="step-desc">45h no nosso EAD, no seu ritmo.</p></div>
+      <div class="how-step"><div class="step-n">03</div><h3 class="step-name">Aulas práticas</h3><p class="step-desc">Veículos modernos com instrutores top.</p></div>
+      <div class="how-step"><div class="step-n">04</div><h3 class="step-name">CNH em mãos</h3><p class="step-desc">98% dos nossos alunos passam de primeira.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DEPOIMENTOS ═══════════ -->
+<section class="testimonials">
+  <div class="test-header">
+    <div>
+      <p class="kicker-y" style="color:var(--red)">Depoimentos</p>
+      <h2 class="test-title">QUEM JÁ<br>TIROU <span>A CNH</span></h2>
+    </div>
+    <p class="test-sub-txt">Histórias reais de quem tirou a CNH com a ViaLivre.</p>
+  </div>
+
+  <div class="test-main">
+    <div class="tc black">
+      <span class="tc-tag">Categoria B</span>
+      <div class="tc-stars"><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span></div>
+      <p class="tc-text lg">"Tentei tirar minha CNH em outra auto escola e reprovei duas vezes na prova prática. Vim pra ViaLivre e em 3 meses já estava com a habilitação em mãos. A diferença nos instrutores é absurda — paciência, técnica e profissionalismo em outro nível. Me arrependo de não ter vindo antes!"</p>
+      <div class="tc-author">
+        <img class="tc-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80" alt="Lucas">
+        <div>
+          <div class="tc-name">Lucas Andrade</div>
+          <div class="tc-role">Categoria B • Aprovado na primeira tentativa</div>
+        </div>
+      </div>
+    </div>
+    <div class="tc yellow-border">
+      <span class="tc-tag" style="background:var(--red);color:white">Categoria AB</span>
+      <div class="tc-stars"><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span></div>
+      <p class="tc-text">"Fiz as duas categorias juntas (A e B) e o processo foi incrível. As aulas no simulador antes de ir pra pista me deram muita segurança. Passei nas duas provas de primeira!"</p>
+      <div class="tc-author">
+        <img class="tc-photo" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80" alt="Fernanda">
+        <div>
+          <div class="tc-name">Fernanda Souza</div>
+          <div class="tc-role">Categoria AB • Aprovada de primeira</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-row3">
+    <div class="tc">
+      <span class="tc-tag">Categoria E</span>
+      <div class="tc-stars"><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span></div>
+      <p class="tc-text">"Precisava da categoria E para uma vaga de empregado. Em 4 meses consegui a habilitação e já estou trabalhando. O investimento valeu cada centavo."</p>
+      <div class="tc-author">
+        <img class="tc-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80" alt="Marcos">
+        <div>
+          <div class="tc-name">Marcos Vieira</div>
+          <div class="tc-role">Categoria E • Aprovado</div>
+        </div>
+      </div>
+    </div>
+    <div class="tc">
+      <span class="tc-tag">Categoria B</span>
+      <div class="tc-stars"><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span></div>
+      <p class="tc-text">"Com 50 anos, achei que seria difícil demais. Os instrutores foram incrivelmente pacientes e o método EAD para teoria foi perfeito para a minha rotina."</p>
+      <div class="tc-author">
+        <img class="tc-photo" src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=120&q=80" alt="Sônia">
+        <div>
+          <div class="tc-name">Sônia Carvalho</div>
+          <div class="tc-role">Categoria B • 50 anos, primeira CNH</div>
+        </div>
+      </div>
+    </div>
+    <div class="tc">
+      <span class="tc-tag">Categoria A</span>
+      <div class="tc-stars"><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span><span class="tc-star">★</span></div>
+      <p class="tc-text">"As aulas de moto foram excelentes. Aprendi a pilotagem correta desde o início, com segurança. Hoje me sinto muito mais confiante no trânsito."</p>
+      <div class="tc-author">
+        <img class="tc-photo" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80" alt="Diego">
+        <div>
+          <div class="tc-name">Diego Pinto</div>
+          <div class="tc-role">Categoria A • Aprovado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="plans">
+  <div class="plans-header">
+    <div>
+      <p class="kicker-y">Investimento</p>
+      <h2 class="plans-title">PLANOS SEM<br><span>LETRAS MIÚDAS</span></h2>
+    </div>
+  </div>
+  <div class="plans-grid">
+    <div class="plan">
+      <p class="plan-tier">Básico</p>
+      <h3 class="plan-name">CATEGORIA B</h3>
+      <div class="plan-price">R$1.490</div>
+      <p class="plan-period">ou 12× de R$137,00</p>
+      <ul class="plan-feats">
+        <li><span>▸</span> 45h aulas teóricas (EAD)</li>
+        <li><span>▸</span> 20 aulas práticas</li>
+        <li><span>▸</span> Simulados de exame</li>
+        <li><span>▸</span> Agendamento online</li>
+      </ul>
+      <a href="#" class="plan-btn">Matricular agora</a>
+    </div>
+    <div class="plan feat">
+      <span class="feat-badge">⚡ Mais escolhido</span>
+      <p class="plan-tier">Completo</p>
+      <h3 class="plan-name">CATEGORIA AB</h3>
+      <div class="plan-price">R$2.190</div>
+      <p class="plan-period">ou 12× de R$199,00</p>
+      <ul class="plan-feats">
+        <li><span>▸</span> 45h aulas teóricas (presencial+EAD)</li>
+        <li><span>▸</span> 25 aulas práticas</li>
+        <li><span>▸</span> Simulador de pista</li>
+        <li><span>▸</span> Moto inclusa (cat. A)</li>
+        <li><span>▸</span> Simulados ilimitados</li>
+      </ul>
+      <a href="#" class="plan-btn">Matricular agora</a>
+    </div>
+    <div class="plan">
+      <p class="plan-tier">Profissional</p>
+      <h3 class="plan-name">CATEGORIA E</h3>
+      <div class="plan-price">R$3.990</div>
+      <p class="plan-period">ou 18× de R$249,00</p>
+      <ul class="plan-feats">
+        <li><span>▸</span> Currículo A+B+D+E</li>
+        <li><span>▸</span> 40 aulas práticas</li>
+        <li><span>▸</span> Veículos pesados</li>
+        <li><span>▸</span> Treinamento ANTT</li>
+      </ul>
+      <a href="#" class="plan-btn">Matricular agora</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-bg2"></div>
+  <div class="cta-ov"></div>
+  <div class="cta-inner">
+    <span class="cta-ytag">Pronto para dirigir?</span>
+    <h2 class="cta-title-big">TIRA A SUA<br><span>CNH HOJE</span></h2>
+    <p class="cta-text">Nossa equipe está pronta para te receber. Venha fazer a matrícula e dar o primeiro passo para a sua independência.</p>
+    <div class="cta-row">
+      <span class="cta-item">📍 <strong>Rua dos Pinheiros, 800 — Pinheiros</strong></span>
+      <span class="cta-item">📞 <strong>(11) 4444-0000</strong></span>
+      <span class="cta-item">⏰ <strong>Seg–Sáb 7h30 às 18h</strong></span>
+    </div>
+    <a href="#" class="btn-yellow" style="font-size:15px;padding:18px 56px">Quero me matricular →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">ViaLivre</div>
+  <div class="footer-links">
+    <a href="#">Instagram</a><a href="#">WhatsApp</a><a href="#">Unidades</a>
+  </div>
+  <span class="footer-copy">© 2025 ViaLivre Auto Escola. Todos os direitos reservados.</span>
+</footer>
+
+<script>
+const mobileMenu = document.getElementById('mobile-menu');
+const navLinks = document.querySelector('.nav-links');
+
+mobileMenu.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    
+    // Animar hambúrguer
+    const spans = mobileMenu.querySelectorAll('span');
+    if (navLinks.classList.contains('active')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+    } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    }
+});
+
+// Fechar menu ao clicar em um link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        const spans = mobileMenu.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    });
+});
+</script>
+</body>
+</html>
