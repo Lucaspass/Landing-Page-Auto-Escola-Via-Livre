@@ -22,7 +22,7 @@ nav{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;justify-cont
 .menu-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1000}
 .menu-toggle span{width:25px;height:2px;background:var(--white);transition:all .3s}
 
-.hero{height:100vh;height:100dvh;min-height:600px;position:relative;overflow:hidden;display:flex;align-items:center}
+.hero{height:100vh;height:100dvh;min-height:850px;position:relative;overflow:hidden;display:flex;align-items:center;padding-top:100px;padding-bottom:180px}
 .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1800&q=85')center/cover no-repeat}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(13,13,13,1) 0%,rgba(13,13,13,.7) 55%,rgba(13,13,13,.2) 100%)}
 .hero-content{position:relative;z-index:2;padding:0 80px;max-width:850px}
@@ -164,7 +164,7 @@ footer{background:var(--black);padding:36px max(64px, env(safe-area-inset-right)
   .nav-links a{display:block;padding:15px;font-size:16px;border-bottom:1px solid rgba(255,255,255,.05)}
   .nav-cta{margin:15px 24px 0;padding:15px!important;display:block}
 
-  .hero{padding-top:calc(70px + env(safe-area-inset-top));height:auto;min-height:100vh;min-height:100dvh;flex-direction:column}
+  .hero{padding-top:calc(70px + env(safe-area-inset-top));padding-bottom:0;height:auto;min-height:100vh;min-height:100dvh;flex-direction:column}
   .hero-content{padding:60px 24px 100px;text-align:center;width:100%;max-width:100%;margin-top:auto}
   .hero-badge{margin:0 auto 24px}
   .hero-title{font-size:clamp(46px, 12vw, 66px);margin-bottom:20px}
